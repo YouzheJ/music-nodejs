@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+     <textarea id="text_data" name="content"><%= data %></textarea> 
+    <button onclick="sendData()">确定</button>
+
+    <script src="/javascripts/jquery.min.js"></script>
+    <script>
+      function sendData() {
+        var content = document.getElementById('text_data').value;
+        // console.log(content)
+        $.ajax({
+          data: {content: content},
+          type: 'POST',
+          url: '/music/add',
+          success: function(data) {
+            console.log(data)
+          },
+          error: function(err) {
+            console.log(err)
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

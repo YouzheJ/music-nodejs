@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var music = require('./routes/music');
 
 var app = express();
 
@@ -25,8 +26,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 
+app.get('/music/add', music.musicAdd); // 增加
+app.post('/music/add', music.postMusicAdd); // 提交增加
 app.get('/music/list', music.musicList); // 获取列表
-app.get('/music/get', music.musicGet); // 获取
+app.get('/music/get/:name', music.musicGet); // 获取单个
+app.get('/music/:name', music.musicAdd); // 修改(要放到最好，否则会影响上面的路由)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

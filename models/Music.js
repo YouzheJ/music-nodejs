@@ -1,4 +1,4 @@
-import mongodb from 'mongodb'
+var mongodb = require('./mongodb');
 var Schema = mongodb.mongoose.Schema;
 var MusicSchema = new Schema({
   name: String,
@@ -21,4 +21,31 @@ var MusicSchema = new Schema({
 
 var Music = mongodb.mongoose.model("Music", MusicSchema);
 var MusicDAO = function() {};
+
+MusicDAO.prototype.save = function(obj, callback) { // 新增
+  var instance = new Music(obj);
+  instance.save(function(err) {
+    callback(err);
+  });
+}
+
+MusicDAO.prototype.update = function(obj, callback) { // 更新（未实现）
+  var instance = new Music(obj);
+  instance.save(function(err) {
+    callback(err);
+  });
+}
+
+MusicDAO.prototype.findByName = function(name, callback) { // 按name查找
+  Music.findOne({name: name}, function(err, obj) {
+    callback(err, obj);
+  });
+}
+
+MusicDAO.prototype.findAll = function(callback) { // 查找所有
+  Music.find({}, function(err, obj) {
+    callback(err, obj);
+  });
+}
+
 module.exports = new MusicDAO();
