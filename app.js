@@ -22,6 +22,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/imgs', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/', index);
 app.use('/users', users);
@@ -29,6 +30,7 @@ app.use('/users', users);
 app.get('/music/add', music.musicAdd); // 增加
 app.post('/music/add', music.postMusicAdd); // 提交增加
 app.get('/music/list', music.musicList); // 获取列表
+app.post('/music/upload', music.musicUpload); // 上传文件
 app.get('/music/get/:name', music.musicGet); // 获取单个
 app.get('/music/:name', music.musicAdd); // 修改(要放到最好，否则会影响上面的路由)
 
