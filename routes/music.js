@@ -1,5 +1,6 @@
 var Music = require('./../models/Music');
 var multiparty = require('multiparty');
+var sizeOf = require('image-size');
 
 exports.musicAdd = function(req, res) { // 增加或修改
   // console.log(req.params.name)
@@ -83,7 +84,16 @@ exports.musicUpload = function(req, res) { // 上传文件
       res.send({'success': false, 'url': 'upload error'});
     }else {
       var url = files.file ? files.file[0].path : '';
-      res.send({'success': true, 'msg': 'upload success', url: url.replace('uploads', 'imgs')})
+      if(url) {
+	sizeOf(url, function(err, dimensions) {
+	if(err) {
+	res.send({'success': false, 'url':'', 'msg': 'read dimensions error'});
+	}else {
+	res.send({'success': true, 'msg': 'upload success', url: url.replace('uploads','imgs'), 'width': dimensions.width, 'height': dimensions.height});
+	}
+	});
+	}
+      //res.send({'success': true, 'msg': 'upload success', url: url.replace('uploads', 'imgs')})
     }
   })
 } 
